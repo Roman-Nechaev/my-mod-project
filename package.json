@@ -18,6 +18,8 @@
     "url": "https://github.com/Roman-Nechaev/my-mod-project/issues"
   },
   "dependencies": {
+    "@vimeo/player": "^2.17.1",
+    "handlebars": "^4.7.7",
     "lodash.throttle": "^4.1.1",
     "modern-normalize": "^1.1.0",
     "simplelightbox": "^2.10.3"
