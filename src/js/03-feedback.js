@@ -99,9 +99,9 @@ function onSaveTextfreal() {
 
   if (saveData) {
     console.log('saveData:', saveData);
-    refs.email.value = getSaveData.email;
+    refs.email.value = getSaveData.email || '';
 
-    refs.message.value = getSaveData.message;
+    refs.message.value = getSaveData.message || '';
   }
 }
 
@@ -111,3 +111,6 @@ function onBtnClick(evt) {
 }
 
 // !!!!! НУЖНО УБРАТЬ АНДЕФАЙНД КОГДА ОДНО ПОЛЕ ПУСТОЕ
+
+//////////////
+/////////////ВТОРОЙ ВАРИАНТ

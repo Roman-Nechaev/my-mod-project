@@ -1,42 +1,33 @@
 import Player from '@vimeo/player';
-const SAVE_TIME_PL = 'videoplayer-current-time';
+var throttle = require('lodash.throttle');
+
 const iframeRef = document.querySelector('iframe');
 
-const player = new Player(iframeRef, {
-  ////
-});
+const SAVE_TIME_PL = 'videoplayer-current-time';
+const getlocalStorage = localStorage.getItem(SAVE_TIME_PL);
 
+const player = new Player(iframeRef, {});
+///ВАРИЕНТ hrottle как отдельная функция
+// function onPlay(data) {
+//   const setTime = data.seconds;
+
+//   onThrottle(setTime);
+// }
+
+// let onThrottle = throttle(e => {
+//   localStorage.setItem(SAVE_TIME_PL, e);
+//   console.log(e);
+// }, 1000);
 const onPlay = function (data) {
-  console.log('onPlay ~ data', data);
-  player
-    .getCurrentTime()
-    .then(function (seconds) {
-      const setTime = seconds;
-      console.log('setTime', setTime);
-      console.log('pausePlay ~ setTime', setTime);
-      localStorage.setItem(SAVE_TIME_PL, setTime);
+  const playerSecond = data.seconds;
 
-      // seconds = the current playback position
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
+  localStorage.setItem(SAVE_TIME_PL, playerSecond);
+
+  console.log(playerSecond);
 };
 
-player.on('play', onPlay);
-
-const pausePlay = function (data) {
-  console.log('pausePlay ~ data', data);
-};
-
-player.on('pause', pausePlay);
-const bar = localStorage.getItem(SAVE_TIME_PL);
-console.log(bar);
-//////
-
-////////////
 player
-  .setCurrentTime(bar)
+  .setCurrentTime(getlocalStorage)
   .then(function (seconds) {
     // seconds = the actual time that the player seeked to
   })
@@ -51,3 +42,9 @@ player
         break;
     }
   });
+
+player.on('timeupdate', throttle(onPlay, 1000));
+
+////////////////////////////////////////////
+
+/////////////ВТОРОЙ ВАРИАНТ
